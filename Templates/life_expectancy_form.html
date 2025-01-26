@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Expectancy Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2>Calculate Required Savings</h2>
+        <form action="{{ url_for('calculate_required_savings') }}" method="POST">
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" class="form-control" id="age" name="age" value="{{ age }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="retirement_age">Retirement Age:</label>
+                <input type="number" class="form-control" id="retirement_age" name="retirement_age" value="{{ retirement_age }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="current_savings"> Total Current Savings:</label>
+                <input type="text" class="form-control" id="total_current_savings" name="total_current_savings" value="{{ '{:.2f}'.format(total_current_savings) }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="income">Current Income:</label>
+                <input type="text" class="form-control" id="income" name="income" value="{{ '{:.2f}'.format(income) }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="predicted_income">Predicted Retirement Income:</label>
+                <input type="text" class="form-control" id="predicted_income" name="predicted_income" value="{{ '{:.2f}'.format(predicted_income) }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="expected_investment_return_rate">Expected Investment Return Rate:</label>
+                <input type="text" class="form-control" id="expected_investment_return_rate" name="expected_investment_return_rate" value="{{ expected_investment_return_rate * 100 }}%" readonly>
+            </div>
+
+            <!-- Life expectancy field (this is the new input the user will provide) -->
+            <div class="form-group">
+                <label for="life_expectancy">Life Expectancy:</label>
+                <input type="number" class="form-control" id="life_expectancy" name="life_expectancy" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Calculate Savings</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

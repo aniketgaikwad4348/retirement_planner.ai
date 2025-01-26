@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Savings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Predict Desired Annual Retirement Income</h1>
+        <form action="{{ url_for('predict_income') }}" method="POST">
+            <label for="age">Current Age:</label>
+            <input type="number" name="age" id="age" placeholder="e.g., 30" min="18" max="100" required>
+            
+            <label for="retirement_age">Retirement Age:</label>
+            <input type="number" name="retirement_age" id="retirement_age" placeholder="e.g., 65" min="18" max="100" required>
+            
+            <label for="current_savings">Current Savings:</label>
+            <input type="number" name="current_savings" id="current_savings" placeholder="e.g., 50000" step="0.01" required>
+    
+            <label for="investment_account_balance">Investment Account Balance:</label>
+            <input type="number" name="investment_account_balance" id="investment_account_balance" placeholder="e.g., 10000" step="0.01" required>
+    
+            <label for="monthly_savings">Monthly Savings:</label>
+            <input type="number" name="monthly_savings" id="monthly_savings" placeholder="e.g., 200" step="0.01" required>
+    
+            <label for="expected_investment_return_rate">Expected Investment Return Rate (%):</label>
+            <input type="number" name="expected_investment_return_rate" id="expected_investment_return_rate" step="0.01" min="0.02" max="0.07" placeholder="e.g., 0.03" required>
+            
+            <!-- Added income field -->
+            <label for="income">Annual Income:</label>
+            <input type="number" name="income" id="income" placeholder="e.g., 60000" step="0.01" required>
+            
+            <button type="submit">Predict Income</button>
+        </form>
+    </div>
+</body>
+</html>

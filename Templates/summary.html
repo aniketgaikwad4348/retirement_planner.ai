@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary of Your Financial Data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Financial Summary</h1>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Age:</strong> {{ age }}</li>
+            <li class="list-group-item"><strong>Retirement Age:</strong> {{ retirement_age }}</li>
+            <li class="list-group-item"><strong>Total Current Savings:</strong> ${{ total_current_savings }}</li>
+            <li class="list-group-item"><strong>Current Income:</strong> ${{ income }}</li>
+            <li class="list-group-item"><strong>Predicted Income:</strong> ${{ predicted_income }}</li>
+            <li class="list-group-item"><strong>Expected Investment Return Rate:</strong> {{ expected_investment_return_rate * 100 }}%</li>
+            <li class="list-group-item"><strong>Monthly Savings:</strong> ${{ monthly_savings }}</li>  <!-- Add Monthly Savings -->
+        </ul>
+        <a href="{{ url_for('life_expectancy_form') }}" class="btn btn-primary mt-3">Go to Life Expectancy Form</a>
+    </div>
+</body>
+</html>

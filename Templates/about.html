@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Retirement Planner</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .jumbotron {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background-image: url('{{ url_for('static', filename='img/about_page_bg.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            text-shadow: 2px 2px 4px #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            filter: brightness(100%);
+        }
+
+        .jumbotron::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .about-section {
+            padding: 50px 0;
+        }
+
+        .about-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: justify;
+        }
+
+        .team-section {
+            padding: 50px 0;
+            background-color: #e9ecef;
+        }
+
+        .team-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .team-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .team-member {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .team-member img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-member h4 {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .team-member p {
+            color: #666666;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Jumbotron Section -->
+    <div class="jumbotron text-center">
+        <h1>About Us</h1>
+    </div>
+
+    <!-- About Section -->
+    <div class="about-section">
+        <div class="container">
+            <div class="section">
+                <h2 class="section-title">Our Mission</h2>
+                <p>At Retirement Planner.ai, our mission is to empower individuals to achieve their retirement goals through innovative, AI-driven financial planning solutions. We believe that everyone deserves a secure and fulfilling retirement, and we are dedicated to providing the tools and insights necessary to make that possible.</p>
+                <p>Our platform leverages advanced artificial intelligence to analyze your financial situation, preferences, and goals, offering personalized retirement strategies that are tailored to your unique needs. We aim to simplify the retirement planning process, making it accessible and comprehensible for everyone, regardless of their financial background.</p>
+            </div>
+    
+            <div class="section">
+                <h2 class="section-title">Why Choose Us?</h2>
+                <p>Retirement planning can be a daunting task, but with our AI-powered platform, you can plan your retirement with confidence. Here are some reasons why you should choose Retirement Planner.ai:</p>
+                <ul>
+                    <li><strong>Personalized Plans:</strong> Our AI analyzes your financial data to create a retirement plan tailored specifically to you.</li>
+                    <li><strong>Expert Insights:</strong> Benefit from strategies and insights that are grounded in the latest financial research and trends.</li>
+                    <li><strong>Ease of Use:</strong> Our user-friendly interface ensures that you can navigate and use our platform effortlessly.</li>
+                    <li><strong>Secure and Reliable:</strong> We prioritize your data security and ensure that your information is handled with the utmost care.</li>
+                    <li><strong>Comprehensive Support:</strong> Our team is here to assist you with any questions or concerns you may have along the way.</li>
+                </ul>
+            </div>
+    
+            <div class="section">
+                <h2 class="section-title">Plan Your Retirement with Artificial Intelligence</h2>
+                <p>Artificial intelligence is transforming the way we approach retirement planning. By utilizing AI, we can provide you with precise, data-driven recommendations that consider a wide range of factors, from market trends to personal financial behavior. This allows us to offer strategies that are not only effective but also adaptable to your changing needs over time.</p>
+                <p>With Retirement Planner.ai, you can rest assured that you are receiving the most up-to-date and relevant advice, helping you to make informed decisions about your financial future.</p>
+            </div>
+    
+            <div class="section">
+                <h2 class="section-title">Contact Us</h2>
+                <p>We are here to help you on your journey to a secure and enjoyable retirement. If you have any questions or need further assistance, please do not hesitate to reach out to us:</p>
+                <p>Email: <a href="mailto:support@retirementplanner.ai">support@retirementplanner.ai</a></p>
+            </div>
+    
+            <a href="/" class="btn btn-primary">Back to Home</a>
+        </div>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="team-section">
+        <div class="container">
+            <h2 class="team-title">Meet the Team</h2>
+            <div class="team-content">
+                <div class="row">
+                    <div class="col-md-4 team-member">
+                        <a href="https://www.linkedin.com/in/aniket-gaikwad-1b4bb5250/">
+                            <img src="{{ url_for('static', filename='img/team_member_1.jpg') }}" alt="Team Member 2">
+                            <h4>Aniket Gaikwad</h4>
+                            <p>Founder & CEO</p>
+                        </a>
+                    </div>
+                    <div class="col-md-4 team-member">
+                        <img src="{{ url_for('static', filename='img/team_member_2.jpg') }}" alt="Team Member 1">
+                        <h4>John Smith</h4>
+                        <p>Chief Financial Advisor</p>
+                    </div>
+                    <div class="col-md-4 team-member">
+                        <img src="{{ url_for('static', filename='img/team_member_3.jpg') }}" alt="Team Member 3">
+                        <h4>Emily Johnson</h4>
+                        <p>Marketing Director</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

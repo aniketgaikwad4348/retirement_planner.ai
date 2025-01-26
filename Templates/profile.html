@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+        margin-top: 60px;
+        margin-bottom: -30px;
+    }
+
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 600px;
+        max-width: 100%;
+        margin-left: 25%;
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: white;
+        font-size: 1.5rem;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .card-body {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-text {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .btn-edit {
+        background-color: #28a745;
+        border: none;
+    }
+
+    .btn-edit:hover {
+        background-color: #218838;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .profile-photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 3rem;
+        color: white;
+        background-color: #007bff;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+
+    .photo-upload-section {
+        text-align: center;
+    }
+
+    .form-control-file {
+        display: none;
+    }
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #343a40; /* Dark background color */
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    
+
+    /* Mobile view adjustments */
+    @media (max-width: 767px) {
+        .card {
+            margin-left: 0;
+            width: 100%;
+        }
+    }
+</style>
+
+<script>
+    function toggleEditForm() {
+        var editForm = document.getElementById('edit-form');
+        var footer = document.querySelector('footer');
+        if (editForm.classList.contains('d-none')) {
+            editForm.classList.remove('d-none');
+            footer.style.position = 'relative'; // Ensure footer is not fixed when form is visible
+        } else {
+            editForm.classList.add('d-none');
+            footer.style.position = 'fixed'; // Fix footer back to bottom
+        }
+    }
+
+    function handlePhotoUpload(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        var formData = new FormData(event.target);
+
+        fetch(event.target.action, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Profile image uploaded successfully!');
+                var photoElement = document.querySelector('.profile-photo img');
+                if (photoElement) {
+                    photoElement.src = URL.createObjectURL(document.getElementById('profile_photo').files[0]);
+                } else {
+                    document.querySelector('.profile-photo').innerHTML = `<img src="${URL.createObjectURL(document.getElementById('profile_photo').files[0])}" alt="Profile Photo" style="width: 100%; height: 100%; border-radius: 50%;">`;
+                }
+            } else {
+                alert('Failed to upload profile image.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while uploading the profile image.');
+        });
+    }
+</script>
+
+<div class="container">
+    <div class="card mt-5">
+        <div class="card-header text-center">Profile</div>
+        <div class="card-body">
+            <div class="photo-upload-section">
+                <div class="profile-photo" onclick="document.getElementById('profile_photo').click();">
+                    {% if user.profile_photo_url %}
+                        <img src="{{ url_for('static', filename=user.profile_photo_url.split('static/')[1]) }}" alt="Profile Photo" style="width: 100%; height: 100%; border-radius: 50%;">
+                    {% else %}
+                        {{ user.firstname[0] }}{{ user.lastname[0] }}
+                    {% endif %}
+                </div>
+            </div>
+            <p class="card-text"><strong>First Name:</strong> {{ user.firstname }}</p>
+            <p class="card-text"><strong>Middle Name:</strong> {{ user.middlename }}</p>
+            <p class="card-text"><strong>Last Name:</strong> {{ user.lastname }}</p>
+            <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+
+            <!-- Edit Button -->
+            <button class="btn btn-edit mt-3" onclick="toggleEditForm()">Edit</button>
+
+            <!-- Edit Form -->
+            <form action="{{ url_for('profile') }}" method="POST" id="edit-form" class="w-100 d-none mt-3">
+                <div class="form-group">
+                    <label for="firstname">First Name</label>
+                    <input type="text" class="form-control" id="firstname" name="firstname" value="{{ user.firstname }}">
+                </div>
+                <div class="form-group">
+                    <label for="middlename">Middle Name</label>
+                    <input type="text" class="form-control" id="middlename" name="middlename" value="{{ user.middlename }}">
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" class="form-control" id="lastname" name="lastname" value="{{ user.lastname }}">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+
+            <!-- Photo Upload Section -->
+            <form id="photo-upload-form" action="{{ url_for('upload_photo') }}" method="POST" enctype="multipart/form-data" class="w-100 d-flex flex-column align-items-center" onsubmit="handlePhotoUpload(event)">
+                <input type="file" id="profile_photo" name="profile_photo" class="form-control-file" required>
+                <button type="submit" class="btn btn-primary mt-3">Upload Photo</button>
+            </form>
+
+            <!-- Logout Button -->
+            <a href="{{ url_for('logout') }}" class="btn btn-danger mt-3">Logout</a>
+        </div>
+        <a href="/" class="btn btn-primary">Back to Home</a>
+    </div>
+    
+</div>
+{% endblock %}

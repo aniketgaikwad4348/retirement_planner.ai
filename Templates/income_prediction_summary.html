@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Prediction Summary</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS */
+        body {
+            background-color: #f4f7f9;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .summary-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            border-left: 5px solid #9428a7;
+            border-right: 5px solid #9428a7;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .summary-card h2 {
+            color: #007bff;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .summary-card .summary-item {
+            margin-bottom: 15px;
+        }
+        .summary-card .summary-item label {
+            font-weight: bold;
+            color: #333333;
+        }
+        .summary-card .summary-item p {
+            margin: 0;
+            color: #555555;
+        }
+        .highlight {
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px;
+            
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .image-content {
+            margin-top: -45%; 
+            margin-bottom: 15%;
+            max-width: 35%;
+            margin-left: 50%;
+            text-align: center;
+        }
+
+        .image-content img {
+            width: 100%;
+            height: auto;
+        }
+
+        .warning-container {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: .25rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .warning-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .warning-container ul li {
+            margin-bottom: .5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="summary-card">
+            <h2>Income Prediction Summary</h2>
+            {% if warnings %}
+                <div class="warning-container">
+                    <ul>
+                        {% for warning in warnings %}
+                            <li>{{ warning }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <div class="summary-item">
+                <label for="age">Current Age:</label>
+                <p>{{ age }}</p>
+            </div>
+            <div class="summary-item">
+                <label for="retirement_age">Retirement Age:</label>
+                <p>{{ retirement_age }}</p>
+            </div>
+            <div class="summary-item">
+                <label for="current_savings"> Total Current Savings:</label>
+                <p>${{ '{:.2f}'.format(total_current_savings) }}</p>
+            </div>
+            <div class="summary-item">
+                <label for="income">Current Income:</label>
+                <p>${{ '{:.2f}'.format(income) }}</p>
+            </div>
+            <div class="summary-item">
+                <label for="expected_investment_return_rate">Expected Investment Return Rate:</label>
+                <p>{{ expected_investment_return_rate * 100 }}%</p>
+            </div>
+            <div class="summary-item">
+                <label for="predicted_income">Predicted Desired Annual Retirement Income:</label>
+                <p class="highlight">${{ '{:.2f}'.format(predicted_income) }}</p>
+            </div>
+   
+            <div class="image-content">
+                <img src="static/img/saving_summary.jpg" alt="Saving Summary">
+            </div>
+            
+            <!-- Link to Life Expectancy Form -->
+            <div class="text-center">
+                <a href="{{ url_for('life_expectancy_form') }}" class="btn btn-primary">calculate required savings</a>
+            </div>
+        
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retirement Plan Overview</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        /* Card Styles */
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .icon {
+            font-size: 45px;
+            color: #007bff;
+        }
+
+        /* Progress Bars */
+        .tracker-bar {
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 50px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .tracker-progress {
+            background-color: #28a745;
+            height: 100%;
+            transition: width 0.4s ease-in-out;
+        }
+
+        .progress-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-left: 10px;
+        }
+
+        /* Highlights */
+        .highlight {
+            font-weight: 700;
+            color: #007bff;
+        }
+
+        .tracker-goal {
+            font-weight: 600;
+            color: #28a745;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #004aad;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* Media Query */
+        @media (max-width: 768px) {
+            .icon {
+                font-size: 35px;
+            }
+
+            .tracker-bar,
+            .tracker-progress {
+                height: 15px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .progress-value {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>Retirement Plan Overview</h1>
+        <p>Track your progress toward a secure future</p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container mt-5">
+        <!-- Section 1: Current Status -->
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-piggy-bank icon mr-3"></i>
+                        <h4>Current Savings</h4>
+                    </div>
+                    <p class="highlight">Total Current Savings: $<span>{{ total_current_savings | default(0) | round(2) }}</span></p>
+                    <div class="d-flex align-items-center">
+                        <div class="tracker-bar" style="flex-grow: 1;">
+                            <div class="tracker-progress" style="width: {{ (total_current_savings / total_savings_needed * 100) | round(2) }}%;"></div>
+                        </div>
+                        <span class="progress-value">{{ (total_current_savings / total_savings_needed * 100) | round(2) }}%</span>
+                    </div>
+                    <p class="tracker-goal mt-2">Savings Goal: ${{ total_savings_needed | default(0) | round(2) }}</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-calendar-alt icon mr-3"></i>
+                        <h4>Time to Retirement</h4>
+                    </div>
+                    <p class="highlight">Years Left: <span>{{ retirement_age - age }}</span></p>
+                    <p>Goal Retirement Age: {{ retirement_age }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Financial Needs -->
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-coins icon mr-3"></i>
+                        <h4>Annual Savings Needed</h4>
+                    </div>
+                    <p class="highlight">Amount Required: $<span>{{ annual_savings_needed | default(0) | round(2) }}</span></p>
+                    <p>Based on calculations.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-hand-holding-usd icon mr-3"></i>
+                        <h4>Expected Annual Income in Retirement</h4>
+                    </div>
+                    <p class="highlight">Predicted Income: $<span>{{ predicted_income | default(0) | round(2) }}</span></p>
+                    <p>Based on AI Predictions</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Monthly Savings -->
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <div class="card p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-chart-line icon mr-3"></i>
+                        <h4>Monthly Savings Comparison</h4>
+                    </div>
+                    <p>Monthly Savings Needed: <span class="highlight">$<span>{{ monthly_savings_needed | default(0) | round(2) }}</span></span></p>
+                    <p>Current Monthly Savings: <span class="{{ 'text-success' if current_monthly_savings >= monthly_savings_needed else 'text-danger' }}">
+                        $<span>{{ current_monthly_savings | default(0) | round(2) }}</span></span>
+                    </p>
+                    <div class="d-flex align-items-center">
+                        <div class="tracker-bar" style="flex-grow: 1;">
+                            <div class="tracker-progress" style="width: {{ (current_monthly_savings / monthly_savings_needed * 100) if monthly_savings_needed > 0 else 0 }}%;"></div>
+                        </div>
+                        <span class="progress-value">{{ (current_monthly_savings / monthly_savings_needed * 100) if monthly_savings_needed > 0 else 0 }}%</span>
+                    </div>
+                    <p class="tracker-goal mt-2">Track your savings progress each month.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Summary -->
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <div class="card p-4 summary-section">
+                    <h3>Total Summary</h3>
+                    <p>Total Savings Needed: <span class="highlight">$<span>{{ total_savings_needed | default(0) | round(2) }}</span></span></p>
+                    <p>Total Income Needed: <span class="highlight">$<span>{{ total_income_needed | default(0) | round(2) }}</span></span></p>
+                </div>
+            </div>
+        </div>
+        <a href="{{ url_for('home') }}">Back to Home</a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Retirement Planner. All Rights Reserved.</p>
+    </div>
+
+    <!-- Bootstrap JS & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
